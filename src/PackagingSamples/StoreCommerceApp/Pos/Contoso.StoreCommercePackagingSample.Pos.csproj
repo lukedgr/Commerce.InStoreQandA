@@ -19,4 +19,19 @@
   <ItemGroup>
     <ProjectReference Include="..\CommerceRuntime\Contoso.StoreCommercePackagingSample.CommerceRuntime.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Libraries\" />
+  </ItemGroup>
+  <Target Name="ContentIncludeAppInisightsLibrary" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <AppInsightsDirectoryPath>$(MSBuildThisFileDirectory)..\..\..\..\node_modules\@microsoft\applicationinsights-web\dist\</AppInsightsDirectoryPath>
+      <AppInsightsJavaScriptFile>applicationinsights-web.js</AppInsightsJavaScriptFile>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(AppInsightsDirectoryPath)$(AppInsightsJavaScriptFile)')" Text=" The application insights library could not be found. Please run 'npm ci' at the root of the repo."/>
+    <Copy SourceFiles="$(AppInsightsDirectoryPath)$(AppInsightsJavaScriptFile)" DestinationFiles="Libraries\$(AppInsightsJavaScriptFile)" SkipUnchangedFiles="true" />
+    <ItemGroup>
+      <Content Include="Libraries\$(AppInsightsJavaScriptFile)"></Content>
+    </ItemGroup>
+  </Target>
 </Project>

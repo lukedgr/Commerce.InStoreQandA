@@ -10,6 +10,7 @@
 import * as Triggers from "PosApi/Extend/Triggers/ProductTriggers";
 import { ObjectExtensions } from "PosApi/TypeExtensions";
 import { ClientEntities } from "PosApi/Entities";
+import { ApplicationInsights, Snippet } from "applicationinsights-web";
 
 export default class PreProductSaleTrigger extends Triggers.PreProductSaleTrigger {
     /**
@@ -24,6 +25,13 @@ export default class PreProductSaleTrigger extends Triggers.PreProductSaleTrigge
 
             return Promise.reject(error);
         } else {
+            let snippet: Snippet = {
+                config: {
+                    instrumentationKey: 'YOUR_INSTRUMENTATION_KEY_GOES_HERE'
+                }
+            };
+            let appInsights = new ApplicationInsights(snippet);
+            appInsights.loadAppInsights();
             return Promise.resolve({ canceled: false });
         }
     }

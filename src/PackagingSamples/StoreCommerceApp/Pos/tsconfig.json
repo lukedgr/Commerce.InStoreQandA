@@ -1,3 +1,17 @@
 {
-  "extends": "./devDependencies/pos-tsconfig-base.json"
+  "extends": "./devDependencies/pos-tsconfig-base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "applicationinsights-web": [
+        "../../../../node_modules/@microsoft/applicationinsights-web/types/applicationinsights-web"
+      ]
+    },
+    "noImplicitAny": false,
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "Libraries",
+    "obj"
+  ]
 }
